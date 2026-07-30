@@ -1,0 +1,17 @@
+{
+  "name": "DilSe",
+  "description": "Agentic AI for Mental Health Awareness & Suicide Prevention built with IBM watsonx.ai.",
+  "repository": "https://github.com/<your-username>/DilSe",
+  "logo": "https://raw.githubusercontent.com/<your-username>/DilSe/main/logo.png",
+  "keywords": [
+    "mental-health",
+    "ibm",
+    "watsonx",
+    "granite",
+    "ai",
+    "rag",
+    "healthcare"
+  ],
+  "website": "https://github.com/<your-username>/DilSe",
+  "success_url": "/"
+}
