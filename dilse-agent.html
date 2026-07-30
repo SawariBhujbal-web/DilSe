@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dilse Agent</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: #f7f8fa;
+      color: #1f2328;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 28px;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: #c0392b;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg { width: 24px; height: 24px; fill: #ffffff; }
+
+    .logo-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2328;
+      line-height: 1.2;
+    }
+    .logo-text p {
+      font-size: 12px;
+      color: #57606a;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #c0392b;
+      background: #fdf2f2;
+      border: 1px solid #f5c6c6;
+      border-radius: 20px;
+      padding: 4px 14px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 44px 24px 38px;
+      text-align: center;
+    }
+
+    .hero-icon {
+      margin: 0 auto 18px;
+      width: 62px;
+      height: 62px;
+      background: #fdf2f2;
+      border: 2px solid #f5c6c6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-icon svg { width: 32px; height: 32px; fill: #c0392b; }
+
+    .hero h2 {
+      font-size: 27px;
+      font-weight: 700;
+      color: #1f2328;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: #57606a;
+      max-width: 500px;
+      margin: 0 auto 30px;
+      line-height: 1.65;
+    }
+
+    .pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      background: #fdf2f2;
+      border: 1px solid #f5c6c6;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: #c0392b;
+      font-weight: 500;
+    }
+
+    /* ── Main layout ── */
+    main {
+      flex: 1;
+      max-width: 980px;
+      width: 100%;
+      margin: 32px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 248px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #57606a;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 14px;
+    }
+
+    /* feature list */
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-size: 13px;
+      color: #1f2328;
+      line-height: 1.5;
+    }
+
+    .feature-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .dot-red    { background: #c0392b; }
+    .dot-rose   { background: #e11d48; }
+    .dot-pink   { background: #db2777; }
+    .dot-orange { background: #f97316; }
+    .dot-purple { background: #7c5cd8; }
+    .dot-warm   { background: #d97706; }
+
+    /* mood meter */
+    .mood-row { display: flex; flex-direction: column; gap: 10px; }
+
+    .mood-item { }
+    .mood-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #57606a;
+      margin-bottom: 5px;
+    }
+    .bar-track {
+      height: 6px;
+      background: #f0f1f3;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill { height: 100%; border-radius: 4px; }
+
+    /* quote card */
+    .quote-card {
+      background: #fdf2f2;
+      border: 1px solid #f5c6c6;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      color: #1f2328;
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    .quote-author {
+      font-size: 11px;
+      color: #c0392b;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* ── Chat Panel ── */
+    .chat-panel {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 540px;
+    }
+
+    .chat-header {
+      background: #c0392b;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-avatar {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .chat-avatar svg { width: 20px; height: 20px; fill: #ffffff; }
+
+    .chat-title { color: #ffffff; font-size: 15px; font-weight: 700; }
+    .chat-subtitle { color: rgba(255,255,255,0.78); font-size: 12px; margin-top: 2px; }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .chat-body { flex: 1; }
+
+    #root {
+      width: 100%;
+      height: 100%;
+      min-height: 468px;
+    }
+
+    /* ── Quick prompts ── */
+    .quick-prompts {
+      padding: 13px 16px;
+      border-top: 1px solid #e5e7eb;
+      background: #fdf2f2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .prompt-label {
+      width: 100%;
+      font-size: 11px;
+      color: #c0392b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .chip {
+      font-size: 12px;
+      color: #c0392b;
+      background: #ffffff;
+      border: 1px solid #f5c6c6;
+      border-radius: 16px;
+      padding: 5px 13px;
+      cursor: default;
+    }
+
+    .chip:hover { background: #fdf2f2; }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #57606a;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      main { grid-template-columns: 1fr; }
+      .sidebar { order: 2; }
+      .chat-panel { order: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                   2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                   C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                   c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>DilSe – Your AI Companion for Mental Well-being</h1>
+        <p>Powered by IBM watsonx Orchestrate</p>
+      </div>
+    </div>
+    <span class="badge">Heart-Centred AI</span>
+  </header>
+
+  
+  <section class="hero">
+    <div class="hero-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+      </svg>
+    </div>
+    <h2>Dil Se — Straight From the Heart</h2>
+    <p>A compassionate AI companion that listens, understands, and responds with warmth. Share your thoughts, feelings, and questions — we're here for you.</p>
+    <div class="pills">
+      <span class="pill">Empathetic Conversations</span>
+      <span class="pill">Emotional Support</span>
+      <span class="pill">Mindful Guidance</span>
+      <span class="pill">Always Present</span>
+    </div>
+  </section>
+
+  
+  <main>
+
+    
+    <aside class="sidebar">
+
+      <div class="card">
+        <h3>What Dilse Offers</h3>
+        <ul class="feature-list">
+          <li class="feature-item"><span class="feature-dot dot-red"></span>Compassionate listening &amp; emotional support</li>
+          <li class="feature-item"><span class="feature-dot dot-rose"></span>Relationship &amp; communication guidance</li>
+          <li class="feature-item"><span class="feature-dot dot-pink"></span>Mindfulness &amp; stress relief tips</li>
+          <li class="feature-item"><span class="feature-dot dot-orange"></span>Motivational conversations</li>
+          <li class="feature-item"><span class="feature-dot dot-purple"></span>Personal growth &amp; reflection</li>
+          <li class="feature-item"><span class="feature-dot dot-warm"></span>Cultural &amp; heartfelt storytelling</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Emotional Wellness</h3>
+        <div class="mood-row">
+          <div class="mood-item">
+            <div class="mood-header"><span>Empathy</span><span>High</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:92%;background:#c0392b"></div></div>
+          </div>
+          <div class="mood-item">
+            <div class="mood-header"><span>Warmth</span><span>Deep</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:88%;background:#e11d48"></div></div>
+          </div>
+          <div class="mood-item">
+            <div class="mood-header"><span>Understanding</span><span>Rich</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:85%;background:#db2777"></div></div>
+          </div>
+          <div class="mood-item">
+            <div class="mood-header"><span>Positivity</span><span>Vibrant</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:80%;background:#f97316"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-text">"The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart."</div>
+        <div class="quote-author">— Helen Keller</div>
+      </div>
+
+      <div class="card" style="font-size:13px;color:#57606a;line-height:1.8">
+        <h3>Session Info</h3>
+        <div style="display:flex;justify-content:space-between"><span>Mode</span><span style="color:#c0392b;font-weight:600">Compassion</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Language</span><span style="color:#1f2328;font-weight:600">Any</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Privacy</span><span style="color:#1f2328;font-weight:600">Secure</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Availability</span><span style="color:#1f2328;font-weight:600">24 / 7</span></div>
+      </div>
+
+    </aside>
+
+    
+    <div class="chat-panel">
+      <div class="chat-header">
+        <div class="chat-avatar">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                     C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="chat-title">Dilse Agent</div>
+          <div class="chat-subtitle"><span class="status-dot"></span>Here for you, always</div>
+        </div>
+      </div>
+
+      <div class="chat-body">
+        <div id="root"></div>
+      </div>
+
+      <div class="quick-prompts">
+        <div class="prompt-label">Try asking…</div>
+        <span class="chip">I'm feeling overwhelmed today</span>
+        <span class="chip">Help me stay motivated</span>
+        <span class="chip">Share a heartfelt story</span>
+        <span class="chip">Tips to improve relationships</span>
+        <span class="chip">How do I practice mindfulness?</span>
+      </div>
+    </div>
+
+  </main>
+
+  
+  <footer>
+    <p>Dilse Agent is an AI companion — for crisis support please reach out to a qualified professional.</p>
+    <p style="margin-top:8px;color:#9ca3af;font-size:11px;border-top:1px solid #e5e7eb;padding-top:10px;max-width:300px;margin-left:auto;margin-right:auto">Made with IBM Bob</p>
+  </footer>
+
+  
+  
+
+  <script>
+    window.wxOConfiguration = {
+      orchestrationID: "7d38ae3b24994952968fa19e7f0cd14d_ae169e91-8023-4f77-9771-005f63aa75d0",
+      hostURL: "https://au-syd.watson-orchestrate.cloud.ibm.com",
+      rootElementID: "root",
+      deploymentPlatform: "ibmcloud",
+      crn: "crn:v1:bluemix:public:watsonx-orchestrate:au-syd:a/7d38ae3b24994952968fa19e7f0cd14d:ae169e91-8023-4f77-9771-005f63aa75d0::",
+      chatOptions: {
+        agentId: "0c616305-c787-424c-b99b-207bd83fd9d0"
+      }
+    };
+    setTimeout(function () {
+      var script = document.createElement('script');
+      script.src = window.wxOConfiguration.hostURL + '/wxochat/wxoLoader.js?embed=true';
+      script.addEventListener('load', function () {
+        wxoLoader.init();
+      });
+      document.head.appendChild(script);
+    }, 0);
+  </script>
+
+</body>
+</html>
